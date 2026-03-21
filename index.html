@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BBBラグビーアカデミー 利用規約</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root {
+    --green: #00B900;
+    --green-dark: #009600;
+    --green-light: #e8f8e8;
+    --green-pale: #f2fdf2;
+    --bg: #f0f0f0;
+    --white: #ffffff;
+    --text: #1a1a1a;
+    --text-sub: #666;
+    --border: #e0e0e0;
+    --accent: #FF6B35;
+    --accent-light: #fff3ee;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--green);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,185,0,0.3);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .header-icon {
+    width: 38px; height: 38px;
+    background: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .header-title {
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+  .header-sub {
+    color: rgba(255,255,255,0.8);
+    font-size: 11px;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  /* ── Menu Tabs ── */
+  .menu-tabs {
+    background: white;
+    display: flex;
+    border-bottom: 2px solid var(--green-light);
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 66px;
+    z-index: 90;
+  }
+  .menu-tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+
+  /* ── Content ── */
+  .content {
+    padding: 12px;
+  }
+
+  .section {
+    display: none;
+  }
+  .section.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+  }
+
+  .card-header {
+    background: var(--green);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-header.orange { background: var(--accent); }
+  .card-header.dark { background: #2d3748; }
+
+  .card-header-icon {
+    font-size: 16px;
+  }
+  .card-header-title {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .card-body {
+    padding: 14px 16px;
+  }
+
+  /* ── Info Rows ── */
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: var(--text-sub); font-weight: 500; }
+  .info-value { font-weight: 700; color: var(--text); text-align: right; }
+  .info-value.green { color: var(--green-dark); }
+  .info-value.accent { color: var(--accent); }
+
+  /* ── Price Cards ── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .price-item {
+    background: var(--green-pale);
+    border: 1.5px solid var(--green-light);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .price-item.accent-bg {
+    background: var(--accent-light);
+    border-color: #ffe0d0;
+  }
+  .price-label {
+    font-size: 11px;
+    color: var(--text-sub);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .price-amount {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .price-item.accent-bg .price-amount { color: var(--accent); }
+  .price-unit {
+    font-size: 11px;
+    color: var(--text-sub);
+    margin-top: 2px;
+  }
+
+  /* ── Notice Box ── */
+  .notice {
+    background: #fffbeb;
+    border-left: 3px solid #f59e0b;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #92400e;
+    line-height: 1.6;
+  }
+  .notice-blue {
+    background: #eff6ff;
+    border-left-color: #3b82f6;
+    color: #1e40af;
+  }
+  .notice-green {
+    background: var(--green-pale);
+    border-left-color: var(--green);
+    color: #14532d;
+  }
+  .notice-red {
+    background: #fef2f2;
+    border-left-color: #ef4444;
+    color: #991b1b;
+  }
+
+  /* ── List ── */
+  .check-list {
+    list-style: none;
+    margin-top: 4px;
+  }
+  .check-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border);
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Location Card ── */
+  .location-card {
+    background: var(--green-pale);
+    border: 1.5px solid var(--green-light);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .location-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+  }
+  .location-venue {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .location-address {
+    font-size: 12px;
+    color: var(--text-sub);
+  }
+
+  /* ── Section title ── */
+  .section-desc {
+    font-size: 12px;
+    color: var(--text-sub);
+    text-align: center;
+    padding: 8px 0 4px;
+    margin-bottom: 4px;
+  }
+
+  /* ── Schedule badge ── */
+  .schedule-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+< truncated lines 303-364 >
+            <div class="price-label">中学生</div>
+            <div class="price-amount">1,800</div>
+            <div class="price-unit">円 / 回</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">📝</span>
+        <span class="card-header-title">入会一時金（初回のみ）</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-label">入会金</span>
+          <span class="info-value">3,300円</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">運営費</span>
+          <span class="info-value">6,600円</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Tシャツ代</span>
+          <span class="info-value">3,300円</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">スポーツ保険料</span>
+          <span class="info-value">800円</span>
+        </div>
+        <div class="notice">
+          ⚠️ 年度途中のご入会でも同額です。Tシャツは初回購入必須（サイズアウト時は再購入）。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">📅</span>
+        <span class="card-header-title">月謝</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-label">小学生・1クラス</span>
+          <span class="info-value green">5,500円</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">小学生・2クラス</span>
+          <span class="info-value green">8,250円</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">中学生・1クラス</span>
+          <span class="info-value green">6,600円</span>
+        </div>
+        <div class="notice notice-blue">
+          👨‍👩‍👦 <strong>兄弟割引あり！</strong><br>
+          2人目以降は月謝が<strong>半額</strong>になります。<br>
+          ※兄弟ともに在籍している場合に限ります。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 活動 -->
+  <div class="section" id="sec1">
+    <p class="section-desc">活動内容・日程について</p>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">🏟️</span>
+        <span class="card-header-title">活動基本情報</span>
+      </div>
+      <div class="card-body">
+        <div class="schedule-row">
+          <span class="schedule-badge">時間</span>
+          <span class="schedule-text">全クラス <strong>90分制</strong></span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge">定員</span>
+          <span class="schedule-text">最低 <strong>4名〜</strong>、最大 <strong>20名</strong>程度</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge">回数</span>
+          <span class="schedule-text">原則 <strong>月4回</strong>（年間40回基準）</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge">調整</span>
+          <span class="schedule-text">月3回または5回になる場合があります</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header orange">
+        <span class="card-header-icon">☀️</span>
+        <span class="card-header-title">夏季休暇</span>
+      </div>
+      <div class="card-body">
+        <div class="notice">
+          🏕️ 各スクールの合宿等の状況を考慮し、<strong>7月下旬〜8月上旬</strong>に設定いたします。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header dark">
+        <span class="card-header-icon">🌧️</span>
+        <span class="card-header-title">悪天候時の対応</span>
+      </div>
+      <div class="card-body">
+        <div class="schedule-row">
+          <span class="schedule-badge" style="background:#3b82f6">小雨</span>
+          <span class="schedule-text">原則 <strong>実施</strong></span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge" style="background:#ef4444">大雨</span>
+          <span class="schedule-text">安全面を考慮し <strong>中止</strong></span>
+        </div>
+        <div class="notice notice-red">
+          ⚡ 高津運動公園は照明・防水設備に制限があるため、大雨時は中止となります。<br>
+          中止の場合は<strong>1回分の参加費を返金</strong>いたします。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 制度 -->
+  <div class="section" id="sec2">
+    <p class="section-desc">振替・休会・返金・退会制度</p>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">🔄</span>
+        <span class="card-header-title">振替制度</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-label">振替期限</span>
+          <span class="info-value">翌月末まで</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">対象クラス</span>
+          <span class="info-value">他クラスへ参加可</span>
+        </div>
+        <div class="notice notice-blue">
+          📌 中学生は小学生クラスへの振替となります。<br><br>
+          例）4月1日欠席 → <strong>5月31日まで</strong>振替可能
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header orange">
+        <span class="card-header-icon">💤</span>
+        <span class="card-header-title">休会制度</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-label">休会費</span>
+          <span class="info-value accent">月 1,500円</span>
+        </div>
+        <div class="notice">
+          🩹 ケガなどやむを得ない事情の場合、休会届をご提出の上、月1,500円をお支払いいただくことで在籍を継続できます。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:#10b981">
+        <span class="card-header-icon">💴</span>
+        <span class="card-header-title">返金制度（1回分）</span>
+      </div>
+      <div class="card-body">
+        <p style="font-size:12px; color:var(--text-sub); margin-bottom:8px;">以下の場合に1回分の参加費を返金</p>
+        <ul class="check-list">
+          <li>当アカデミー活動中のケガ</li>
+          <li>インフルエンザ等の感染症</li>
+          <li>学校行事</li>
+          <li>定期テスト・テスト1週間前</li>
+          <li>悪天候による中止</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header dark">
+        <span class="card-header-icon">🚪</span>
+        <span class="card-header-title">退会について</span>
+      </div>
+      <div class="card-body">
+        <div class="notice notice-red">
+          📢 退会をご希望の場合は、<strong>原則30日前まで</strong>にご連絡ください。<br><br>
+          それ以降の場合は、翌月分の月謝が発生いたします。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 場所 -->
+  <div class="section" id="sec3">
+    <p class="section-desc">活動場所の一覧</p>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-icon">📍</span>
+        <span class="card-header-title">活動場所</span>
+      </div>
+      <div class="card-body">
+        <div class="location-card">
+          <div class="location-name">🟢 八千代クラス</div>
+          <div class="location-venue">高津運動公園</div>
+          <div class="location-address">千葉県八千代市高津</div>
+        </div>
+        <div class="location-card">
+          <div class="location-name">🟢 千葉クラス</div>
+          <div class="location-venue">エスタディオサンフット</div>
+          <div class="location-address">千葉県千葉市花見川区犢橋町1612-36</div>
+        </div>
+        <div class="notice notice-red">
+          ❌ <strong>市川クラスは2025年度をもって閉校</strong>となりました。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ その他 -->
+  <div class="section" id="sec4">
+    <p class="section-desc">保険・写真・規約について</p>
+
+    <div class="card">
+      <div class="card-header" style="background:#6366f1">
+        <span class="card-header-icon">🛡️</span>
+        <span class="card-header-title">保険について</span>
+      </div>
+      <div class="card-body">
+        <div class="notice notice-blue">
+          🔒 当アカデミーでは<strong>スポーツ安全保険</strong>に加入しております。<br>
+          保険料は入会時に徴収いたします（800円）。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:#f59e0b">
+        <span class="card-header-icon">📸</span>
+        <span class="card-header-title">写真・動画の利用について</span>
+      </div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li>SNS・HP・広報活動等に使用する場合があります</li>
+          <li>個人が特定されないよう配慮いたします</li>
+          <li>掲載を希望されない場合は事前にお申し出ください</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header dark">
+        <span class="card-header-icon">📋</span>
+        <span class="card-header-title">活動規約（基本）</span>
+      </div>
+      <div class="card-body">
+        <div class="schedule-row">
+          <span class="schedule-badge">時間</span>
+          <span class="schedule-text">全クラス <strong>90分制</strong></span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge">最小</span>
+          <span class="schedule-text">開催最低人数 <strong>4名以上</strong></span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-badge">定員</span>
+          <span class="schedule-text"><strong>20名</strong>程度</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; padding: 12px 0 20px; color: var(--text-sub); font-size: 11px;">
+      BBBラグビーアカデミー 利用規約 2026年度版<br>
+      ご不明な点はLINEにてお問い合わせください 🏉
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.section');
+
+  function switchTab(index) {
+    tabs.forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+    sections.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
