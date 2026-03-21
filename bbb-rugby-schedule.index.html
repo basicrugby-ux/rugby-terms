@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBBラグビーアカデミー 2026年度 年間予定表</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rugby-green: #1a6b3a;
+    --rugby-dark: #0d3d20;
+    --rugby-gold: #d4a017;
+    --practice-bg: #e6f4ec;
+    --practice-border: #2e9d55;
+    --holiday-bg: #fff0f0;
+    --holiday-border: #e05252;
+    --cup-bg: #fff8e1;
+    --cup-border: #d4a017;
+    --bg: #f4f6f3;
+    --card-bg: #ffffff;
+    --text: #1a2a1a;
+    --muted: #6b7c6b;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, var(--rugby-dark) 0%, var(--rugby-green) 100%);
+    color: #fff;
+    padding: 20px 16px 16px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+  .site-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    line-height: 1.2;
+  }
+  .site-header p {
+    font-size: 0.72rem;
+    opacity: 0.82;
+    margin-top: 4px;
+  }
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* QUARTER NAV */
+  .quarter-nav {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    background: var(--rugby-dark);
+    scrollbar-width: none;
+  }
+  .quarter-nav::-webkit-scrollbar { display: none; }
+  .quarter-btn {
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .quarter-btn.active, .quarter-btn:active {
+    background: var(--rugby-gold);
+    color: var(--rugby-dark);
+    border-color: var(--rugby-gold);
+    font-weight: 700;
+  }
+
+  /* QUARTER SECTION */
+  .quarter-section {
+    display: none;
+    padding: 12px 12px 24px;
+  }
+  .quarter-section.visible { display: block; }
+
+  .quarter-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    color: var(--rugby-dark);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+    border-left: 4px solid var(--rugby-green);
+    padding-left: 8px;
+  }
+
+  /* MONTH CARD */
+  .month-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .month-header {
+    background: linear-gradient(90deg, var(--rugby-green), #2a8a50);
+    color: #fff;
+    padding: 10px 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .month-header .month-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  .month-header .month-sub {
+    font-size: 0.75rem;
+    opacity: 0.85;
+  }
+  .month-header .month-count {
+    margin-left: auto;
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 2px 8px;
+  }
+
+  /* CALENDAR GRID */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .cal-dow {
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 5px 0;
+    background: #f0f4f0;
+    color: var(--muted);
+  }
+  .cal-dow.wed { color: var(--practice-border); background: #edf7f0; }
+  .cal-dow.sat { color: #2060c0; background: #eef3ff; }
+  .cal-dow.sun { color: #c03030; background: #fff0f0; }
+
+  .cal-day {
+    min-height: 52px;
+    padding: 4px 3px 3px;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+  }
+  .cal-day:nth-child(7n) { border-right: none; }
+  .cal-day.empty { background: #fafafa; }
+
+  .cal-day .day-num {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 2px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .cal-day.sat .day-num { color: #2060c0; }
+  .cal-day.sun .day-num { color: #c03030; }
+
+  .cal-day.practice {
+    background: var(--practice-bg);
+    border-top-color: #c8ecd4;
+    border-right-color: #c8ecd4;
+  }
+  .cal-day.practice .day-num {
+    background: var(--practice-border);
+    color: #fff;
+  }
+  .cal-day.practice-sat {
+    background: #eef4ff;
+    border-top-color: #c5d8f7;
+    border-right-color: #c5d8f7;
+  }
+  .cal-day.practice-sat .day-num {
+    background: #2060c0;
+    color: #fff;
+  }
+
+  .cal-day.holiday {
+    background: var(--holiday-bg);
+    border-top-color: #f7c5c5;
+    border-right-color: #f7c5c5;
+  }
+  .cal-day.holiday .day-num {
+    color: var(--holiday-border);
+  }
+
+  .cal-day.cup {
+    background: var(--cup-bg);
+    border-top-color: #f7e0a0;
+    border-right-color: #f7e0a0;
+  }
+  .cal-day.cup .day-num {
+    background: var(--rugby-gold);
+    color: #fff;
+  }
+
+  .cal-day .day-label {
+    font-size: 0.58rem;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--muted);
+    word-break: keep-all;
+  }
+  .cal-day.practice .day-label { color: var(--practice-border); font-weight: 700; }
+  .cal-day.practice-sat .day-label { color: #2060c0; font-weight: 700; }
+  .cal-day.holiday .day-label { color: var(--holiday-border); }
+  .cal-day.cup .day-label { color: #8a6000; font-weight: 700; }
+
+  /* SUMMARY BAR */
+  .summary-bar {
+    padding: 8px 14px;
+    background: #f7faf7;
+    border-top: 1px solid #e8f0e8;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  .summary-bar span { display: flex; align-items: center; gap: 4px; }
+  .summary-bar .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ANNUAL STATS */
+  .annual-stats {
+    margin: 0 12px 24px;
+    background: linear-gradient(135deg, var(--rugby-dark), var(--rugby-green));
+    border-radius: var(--radius);
+    padding: 16px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    text-align: center;
+  }
+  .stat-item .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--rugby-gold);
+  }
+  .stat-item .stat-label { font-size: 0.65rem; opacity: 0.85; margin-top: 2px; }
+
+  @media print {
+    .quarter-nav, .site-header { position: static; }
+    .quarter-section { display: block !important; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>🏉 BBBラグビーアカデミー<br>2026年度 年間予定表</h1>
+  <p>活動日：毎週水曜日・毎週土曜日</p>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#2e9d55"></span>水曜練習</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#2060c0"></span>土曜練習</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#e05252"></span>お休み</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#d4a017"></span>カップ戦</span>
+  </div>
+</header>
+
+<nav class="quarter-nav">
+  <button class="quarter-btn active" onclick="showQuarter(0, this)">4〜6月</button>
+  <button class="quarter-btn" onclick="showQuarter(1, this)">7〜9月</button>
+  <button class="quarter-btn" onclick="showQuarter(2, this)">10〜12月</button>
+  <button class="quarter-btn" onclick="showQuarter(3, this)">27年1〜3月</button>
+</nav>
+
+<div id="quarters-container"></div>
+
+<script>
+// ===== DATA =====
+const jpHolidays = {
+  "2026-04-29": "昭和の日",
+  "2026-05-03": "憲法記念日",
+  "2026-05-04": "みどりの日",
+  "2026-05-05": "こどもの日",
+  "2026-05-06": "振替休日",
+  "2026-07-20": "海の日",
+  "2026-08-11": "山の日",
+  "2026-09-21": "敬老の日",
+  "2026-09-23": "秋分の日",
+  "2026-10-12": "スポーツの日",
+  "2026-11-03": "文化の日",
+  "2026-11-23": "勤労感謝の日",
+  "2027-01-01": "元日",
+  "2027-01-11": "成人の日",
+  "2027-02-11": "建国記念日",
+  "2027-02-23": "天皇誕生日",
+  "2027-03-20": "春分の日",
+};
+const extraHolidays = {
+  "2026-05-02": "お休み",
+  "2026-07-22": "夏休み",
+  "2026-07-25": "夏休み",
+  "2026-07-29": "夏休み",
+  "2026-08-01": "夏休み",
+  "2026-08-12": "夏休み",
+  "2026-08-15": "夏休み",
+  "2026-10-17": "お休み",
+  "2026-12-30": "年末休み",
+  "2027-01-02": "お休み",
+  "2027-03-27": "春休み",
+  "2027-03-31": "春休み",
+};
+const academyCup = { "2027-01-11": "アカデミーカップ" };
+// 活動追加日（'wed' or 'sat' で種別を区別）
+const extraActivityDays = {
+  "2027-03-20": "sat",  // 土曜扱いで練習（春分の日を上書き）
+  "2027-03-24": "wed",  // 水曜扱いで練習（春休みを上書き）
+};
+const allHolidays = { ...jpHolidays, ...extraHolidays };
+
+function dateKey(y, m, d) {
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function daysInMonth(y, m) {
+  return new Date(y, m, 0).getDate();
+}
+
+function firstDayOfWeek(y, m) {
+  return new Date(y, m - 1, 1).getDay(); // 0=Sun
+}
+
+const JP_DOW = ['日','月','火','水','木','金','土'];
+const quarters = [
+  { label: "2026年 4〜6月", months: [{y:2026,m:4},{y:2026,m:5},{y:2026,m:6}] },
+  { label: "2026年 7〜9月", months: [{y:2026,m:7},{y:2026,m:8},{y:2026,m:9}] },
+  { label: "2026年 10〜12月", months: [{y:2026,m:10},{y:2026,m:11},{y:2026,m:12}] },
+  { label: "2027年 1〜3月", months: [{y:2027,m:1},{y:2027,m:2},{y:2027,m:3}] },
+];
+
+function renderMonth(y, m) {
+  const totalDays = daysInMonth(y, m);
+  const startDow = firstDayOfWeek(y, m); // 0=Sun (Sunday-first, no conversion needed)
+  let practiceCount = 0;
+  let holidayCount = 0;
+  let cupCount = 0;
+
+  // Day of week headers: Sun-first
+  const dowLabels = ['日','月','火','水','木','金','土'];
+  const dowClasses = ['sun','','','wed','','','sat'];
+
+  let headerHtml = dowLabels.map((d,i) =>
+    `<div class="cal-dow ${dowClasses[i]}">${d}</div>`
+  ).join('');
+
+  // Empty cells
+  let cells = '';
+  for (let i = 0; i < startDow; i++) {
+    cells += `<div class="cal-day empty"></div>`;
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const key = dateKey(y, m, day);
+    const dow = new Date(y, m - 1, day).getDay(); // 0=Sun
+    const isSat = dow === 6;
+    const isSun = dow === 0;
+    const isWed = dow === 3;
+    const extra = extraActivityDays[key]; // 'wed', 'sat', or undefined
+    const isHoliday = !!allHolidays[key] && !extra;
+    const isCup = !!academyCup[key];
+
+    const practiceWed = (isWed && !isHoliday && !isCup) || extra === 'wed';
+    const practiceSat = (isSat && !isHoliday && !isCup) || extra === 'sat';
+    const isPractice = practiceWed || practiceSat;
+
+    let cls = 'cal-day';
+    if (isSun) cls += ' sun';
+    else if (isSat) cls += ' sat';
+
+    if (isCup) { cls += ' cup'; cupCount++; }
+    else if (isHoliday && (isWed || isSat)) { cls += ' holiday'; holidayCount++; }
+    else if (practiceWed) { cls += ' practice'; practiceCount++; }
+    else if (practiceSat) { cls += ' practice-sat'; practiceCount++; }
+    else if (isHoliday) cls += ' holiday-bg';
+
+    let label = '';
+    if (isCup) label = '🏆カップ';
+    else if (isHoliday && (isWed || isSat)) label = '✕休み';
+    else if (isHoliday) label = allHolidays[key].length > 4 ? allHolidays[key].slice(0,4) : allHolidays[key];
+    else if (isPractice) label = '◉練習';
+
+    cells += `<div class="${cls}">
+      <div class="day-num">${day}</div>
+      ${label ? `<div class="day-label">${label}</div>` : ''}
+    </div>`;
+  }
+
+  // Count wed (including extra activity days) and sat separately
+  let wedCount = 0, satCount = 0;
+  for (let day = 1; day <= totalDays; day++) {
+    const k = dateKey(y, m, day);
+    const dow = new Date(y, m - 1, day).getDay();
+    const extra = extraActivityDays[k];
+    const isHol = !!allHolidays[k] && !extra;
+    const isCup = !!academyCup[k];
+    if ((dow === 3 && !isHol && !isCup) || extra === 'wed') wedCount++;
+    if ((dow === 6 && !isHol && !isCup) || extra === 'sat') satCount++;
+  }
+
+  const jpMonthName = `${m}月`;
+  return { html: `
+    <div class="month-card">
+      <div class="month-header">
+        <span class="month-name">${y}年 ${jpMonthName}</span>
+        <span class="month-count">練習 ${wedCount + satCount}回</span>
+      </div>
+      <div class="cal-grid">
+        ${headerHtml}
+        ${cells}
+      </div>
+      <div class="summary-bar">
+        <span><span class="dot" style="background:#2e9d55"></span>水曜 ${wedCount}回</span>
+        <span><span class="dot" style="background:#2060c0"></span>土曜 ${satCount}回</span>
+      </div>
+    </div>
+  `, practice: wedCount + satCount, wed: wedCount, sat: satCount };
+}
+
+function renderAll() {
+  const container = document.getElementById('quarters-container');
+
+  let totalPractice = 0, totalWed = 0, totalSat = 0;
+
+  quarters.forEach((q, qi) => {
+    const section = document.createElement('div');
+    section.className = 'quarter-section' + (qi === 0 ? ' visible' : '');
+    section.id = `quarter-${qi}`;
+
+    let html = `<div class="quarter-title">${q.label}</div>`;
+    q.months.forEach(({y, m}) => {
+      const res = renderMonth(y, m);
+      html += res.html;
+      totalPractice += res.practice;
+      totalWed += res.wed;
+      totalSat += res.sat;
+    });
+
+    section.innerHTML = html;
+    container.appendChild(section);
+  });
+
+  // Add annual stats before quarters
+  const stats = document.createElement('div');
+  stats.className = 'annual-stats';
+  stats.innerHTML = `
+    <div class="stat-item"><div class="stat-num">${totalPractice}</div><div class="stat-label">年間練習日</div></div>
+    <div class="stat-item"><div class="stat-num">${totalWed}</div><div class="stat-label">水曜練習</div></div>
+    <div class="stat-item"><div class="stat-num">${totalSat}</div><div class="stat-label">土曜練習</div></div>
+  `;
+  container.insertBefore(stats, container.firstChild);
+}
+
+function showQuarter(idx, btn) {
+  document.querySelectorAll('.quarter-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.quarter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`quarter-${idx}`).classList.add('visible');
+  btn.classList.add('active');
+}
+
+renderAll();
+</script>
+</body>
+</html>
